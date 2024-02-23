@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceReportController;
 
 
 
@@ -19,6 +20,8 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPasswor
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/attendance-report-pdf', [AttendanceReportController::class, 'generatePdfReport']);
+    Route::post('/attendance-report-excel', [AttendanceReportController::class, 'generateExcelReport']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
     Route::resource('employees', EmployeeController::class);
