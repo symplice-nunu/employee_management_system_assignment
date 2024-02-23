@@ -47,9 +47,7 @@ return [
     ],
     'defaults' => [
         'routes' => [
-            /*
-             * Route for accessing parsed swagger annotations.
-            */
+            'api' => 'api/documentation',
             'docs' => 'docs',
 
             /*
