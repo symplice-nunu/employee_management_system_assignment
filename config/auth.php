@@ -41,6 +41,12 @@ return [
             'provider' => 'users',
         ],
     ],
+    'sanctum' => [
+        'driver' => 'sanctum',
+        'provider' => 'users',
+        'model' => App\Models\User::class,
+    ],
+    
 
     /*
     |--------------------------------------------------------------------------
