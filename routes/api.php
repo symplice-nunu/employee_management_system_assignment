@@ -8,17 +8,24 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AttendanceController;
+
+
 
 // Public routes
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-Route::resource('employees', EmployeeController::class);
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
+    Route::resource('employees', EmployeeController::class);
+    Route::prefix('attendance')->group(function () {
+        Route::post('/record-arrival/{employeeId}', [AttendanceController::class, 'recordArrival']);
+        Route::post('/record-departure/{employeeId}', [AttendanceController::class, 'recordDeparture']);
+    });
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
