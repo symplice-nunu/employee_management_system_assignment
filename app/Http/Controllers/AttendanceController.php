@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Mail\AttendanceRecorded;
+use Illuminate\Support\Facades\Mail;
 
 class AttendanceController extends Controller
 {
@@ -13,6 +15,8 @@ class AttendanceController extends Controller
             ['employee_id' => $employeeId],
             ['arrival_time' => now()]
         );
+
+        Mail::to('intwarisymplice@gmail.com')->send(new AttendanceRecorded($attendance, 'arrival'));
 
         return response()->json(['message' => 'Arrival time recorded successfully']);
     }
@@ -25,10 +29,11 @@ class AttendanceController extends Controller
 
         if ($attendance) {
             $attendance->update(['departure_time' => now()]);
+            Mail::to('intwarisymplice@gmail.com')->send(new AttendanceRecorded($attendance, 'departure'));
+
             return response()->json(['message' => 'Departure time recorded successfully']);
         } else {
             return response()->json(['message' => 'No ongoing attendance record found'], 404);
         }
     }
 }
-

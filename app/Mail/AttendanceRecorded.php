@@ -2,25 +2,27 @@
 
 namespace App\Mail;
 
+use App\Models\Attendance;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AttendanceRecorded extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $employeeName;
+    public $attendance;
+    public $recordType;
 
-    public function __construct($employeeName)
+    public function __construct(Attendance $attendance, $recordType)
     {
-        $this->employeeName = $employeeName;
+        $this->attendance = $attendance;
+        $this->recordType = $recordType;
     }
 
     public function build()
     {
         return $this->subject('Attendance Recorded')
-                    ->view('emails.attendance-recorded');
+            ->view('emails.attendance_recorded');
     }
 }
